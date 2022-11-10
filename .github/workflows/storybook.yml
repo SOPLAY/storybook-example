@@ -1,0 +1,29 @@
+name: Storybook
+
+on:
+  push:
+    branches:
+      - main
+
+# 권한 설정
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v3
+
+      - name: Install Yarn
+        run: |
+          yarn
+          yarn build-storybook
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy git pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build # The folder the action should deploy.
