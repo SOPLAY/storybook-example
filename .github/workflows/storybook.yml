@@ -15,10 +15,17 @@ jobs:
       - name: git checkout
         uses: actions/checkout@v3
 
-      - name: Install Yarn
-        run: |
-          yarn
-          yarn build-storybook
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: yarn install
+        run: yarn
+
+      - name: yarn build
+        run: yarn build-storybook
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -26,4 +33,4 @@ jobs:
       - name: deploy git pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build # The folder the action should deploy.
+          folder: storybook-static
