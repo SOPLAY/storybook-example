@@ -9,7 +9,7 @@ on:
 permissions:
   contents: write
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
@@ -26,10 +26,8 @@ jobs:
       - name: yarn build
         run: yarn build-storybook
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
+      #배포
+
       - name: deploy git pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
